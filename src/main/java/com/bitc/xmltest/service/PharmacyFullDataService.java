@@ -9,4 +9,6 @@ public interface PharmacyFullDataService {
   List<PharmacyFullDataItemDto> getItemList() throws Exception;
 
   List<PharmacyFullDataItemDto> getItemListUrl(String url) throws Exception;
+
+  List<PharmacyFullDataItemDto> getItemListUrlJson(String url) throws Exception;
 }

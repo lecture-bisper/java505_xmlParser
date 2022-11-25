@@ -59,4 +59,31 @@ public class PharmacyFullDataServiceImpl implements PharmacyFullDataService {
 
     return itemList;
   }
+
+  @Override
+  public List<PharmacyFullDataItemDto> getItemListUrlJson(String strUrl) throws Exception {
+    List<PharmacyFullDataItemDto> itemList = null;
+    URL url = null;
+    HttpURLConnection urlConn = null;
+
+    try {
+      url = new URL(strUrl);
+      urlConn = (HttpURLConnection) url.openConnection();
+      urlConn.setRequestMethod("GET");
+
+      JAXBContext jc = JAXBContext.newInstance(PharmacyFullDataDto.class);
+      Unmarshaller um = jc.createUnmarshaller();
+
+      PharmacyFullDataDto fullData = (PharmacyFullDataDto) um.unmarshal(url);
+      itemList = fullData.getBody().getItems().getItemList();
+    }
+    catch (Exception e) {
+      e.printStackTrace();
+    }
+    finally {
+      if (urlConn != null) { urlConn.disconnect(); }
+    }
+
+    return itemList;
+  }
 }
